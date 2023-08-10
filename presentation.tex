@@ -128,4 +128,40 @@
 	Play around with it.
 }
 
+\subsection{Inspection}
+
+\begin{frame}{Looking Around}
+	\begin{itemize}
+		\item \texttt{ls}: LiSt directory contents
+		\begin{itemize}
+			\item \texttt{ls -a} includes hidden files/directories (e.g.\ \texttt{.git}, {.gitignore})
+			\item \texttt{ls -l} gives extra info
+			\item \texttt{ls -al} does both
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\note[itemize]{
+	\item
+	When you're in a directory, you want to know which files are there.
+	Or which directories, so you can \texttt{cd} further in.
+	\texttt{ls} tells you.
+	
+	\item
+	\texttt{ls} takes options, a.k.a. \emph{flags}.
+	\texttt{-a} (all) shows hidden files and directories, which start with a dot.
+	This is important, 'cause Git uses these.
+	\texttt{-l} (long) shows owner, permissions, size, date, etc.
+	
+	\item
+	A hyphen and a single letter is the convention for flags in the shell.
+	We can combine options by giving them sequentially.
+	A single hyphen followed by multiple letters also combines flags.
+	Order doesn't matter.
+	Demonstrate this.
+	
+	\item
+	Some programs take long options: these use two hyphens followed by a word.
+	We'll see these later on some Git commands.
+}
+
 \end{document}
