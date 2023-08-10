@@ -69,4 +69,63 @@
 	Open it now.
 }
 
+\subsection{Navigation}
+
+\begin{frame}{UNIX Directories}
+	\begin{itemize}
+		\item \texttt{/} is the root directory
+		\item \texttt{cd \textasciitilde} is your user's home directory
+		\begin{itemize}
+			\item \texttt{/home/abc123/} on Linux
+			\item \texttt{/Users/abc123/} on Mac OS X
+			\item \texttt{/c/Users/abc123/} in Git Bash on Windows
+		\end{itemize}
+		\item \texttt{.} is the current directory
+		\item \texttt{..} is the parent directory
+	\end{itemize}
+	Paths starting with \texttt{/} or \texttt{cd \textasciitilde} are \emph{absolute paths}.
+	
+	Others are \emph{relative paths}, and start from the current directory.
+\end{frame}
+\note[itemize]{
+	\item
+	The first thing to learn is how the directory structure is represented on the command line.
+	Directories and files have \emph{paths}: a list, one inside the other, of the directories in the tree structure reaching down to them.
+	Paths are separated by forward slashes.
+	Windows sometimes uses backslashes, but Git Bash does it properly with forward slashes.
+	
+	\item
+	The difference between absolute and relative paths is important in general.
+	Generally, your code should use relative paths whenever possible.
+	This is especially important in Git repositories.
+	Suppose someone else downloads your repo: they'll have a different username, or put it in a different place, so the absolute path will be different.
+	Use relative paths instead.
+}
+
+\begin{frame}{Moving Around}
+	\begin{itemize}
+		\item \texttt{pwd}: Print Working Directory
+		\item \texttt{cd}: Change Directory
+		\begin{itemize}
+			\item \texttt{cd -} goes to previous directory
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\note[itemize]{
+	\item
+	At any point, your shell is in one directory: the \emph{working directory}.
+	\texttt{pwd} (print working directory) will tell you which directory you're in.
+	Try it now.
+	
+	\item
+	Before we start doing anything, we'll usually want to move to the correct directory.
+	We do this with \texttt{cd} (change directory).
+	
+	\item
+	\texttt{cd} can take a relative or absolute path.
+	This is when \texttt{..} to go up a directory becomes useful, and note that we can chain this or include it mid-path.
+	\texttt{cd} can also take the special argument \texttt{-} to go back to the most recent working directory.
+	Play around with it.
+}
+
 \end{document}
