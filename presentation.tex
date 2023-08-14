@@ -1,5 +1,14 @@
 \input{theme}
 
+%A command for unnumbered footnotes.
+%From https://latex.org/forum/viewtopic.php?t=30813
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
 \title{An Introduction to Git}
 \author{Christopher Brown}
 \date{}
