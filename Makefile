@@ -11,7 +11,7 @@ supporting_tex_files := theme.tex
 all: $(slidedoc).pdf $(notedoc).pdf $(handoutdoc).pdf
 .PHONY: all
 
-%.pdf: %.tex  $(content_tex_files) $(supporting_tex_files)
+%.pdf: %.tex $(content_tex_files) $(supporting_tex_files)
 	latexmk $(LATEXMK_FLAGS) --jobname="$(basename $@)" $<
 
 clean:
