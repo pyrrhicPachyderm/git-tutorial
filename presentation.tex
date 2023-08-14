@@ -242,4 +242,63 @@
 	But this might be useful in future, and you might see me using these out of habit.
 }
 
+\section{Hashes}
+
+\subsection{SHA1}
+
+\begin{frame}{Hashing}
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/sha1}
+	\blfootnote{Cryptographic Hash Function by Jorge Stolfi}
+\end{frame}
+\note[itemize]{
+	\item
+	A hash function converts some arbitrary input to a fixed-length string of seemingly-random input.
+	It always converts the same input to the same output.
+	But small changes in input cause large changes in output.
+	
+	\item
+	This example uses the SHA1 hash function, the same one used by Git.
+	We'll get to why Git needs this later.
+	
+	\item
+	You can use \texttt{sha1sum} at your command line.
+	(Demonstrate this a bit.)
+	
+	\item
+	Note that you can use this hash huge files, and still get a fixed-length output.
+	It's theoretically possible for two different files to give the same output, but astronomically unlikely.
+}
+
+\subsection{Uses}
+
+\begin{frame}{Uses of Hashes}
+	\begin{itemize}
+		\item Checksums: checking download validity
+		\item Security: storing passwords
+		\item Version control: identifying versions
+	\end{itemize}
+\end{frame}
+\note[itemize]{
+	\item
+	Hashes have a bunch of different uses.
+	
+	\item
+	Suppose you download a huge file, and you want to know if the download got corrupted.
+	The server hashes the file, and you hash the file, and you compare hashes.
+	If one small bit in the file is wrong, the hash will be totally different.
+	
+	\item
+	Websites that need a password should never store your password in plain text.
+	If they did, and they got hacked, your password would be available for everyone to see.
+	Instead, they store a hash of your password.
+	When you submit your password, they check the hash of that against their stored hash.
+	Hashes are not easily reversible, so someone who hacks the server and gets the hash can't easily get your original password.
+	
+	\item
+	Our use is in version control.
+	You can hash a file.
+	Then, to check if the file's changed, you can just hash it again and check if the hash has changed.
+}
+
 \end{document}
