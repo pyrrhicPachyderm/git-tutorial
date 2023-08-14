@@ -312,4 +312,66 @@
 	That said, I'll be beginning with quite a lot of motivation and background before we get into the actual commands, so bear with me.
 }
 
+\section{Motivation}
+
+\subsection{General Use}
+
+\begin{frame}{Why Use Git?}
+	\centering
+	\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/phd-final}
+	\blfootnote{Piled Higher and Deeper by Jorge Cham}
+\end{frame}
+\note[itemize]{
+	\item
+	Why do we use Git?
+	The main things is that it allows us to keep different versions in a well-controlled fashion.
+	It avoids the stereotypical proliferation of poorly named ``final'' versions.
+	
+	\item
+	It's also very useful for any sort of collaborative effort.
+	Have you ever done any sort of collaborative project where you're emailing files back and forth.
+	Nobody can keep track of which is the most recent version.
+	And if you both change a file at the same time, how do you combine the versions?
+	Git handles the versioning for you, and also has a very neat algorithm for merging two sets of changes into a version with both changes.
+}
+
+\subsection{Fixing Problems}
+
+\begin{frame}{What Can Git Do?}
+	\begin{itemize}
+		\item I changed some stuff, and my supervisor changed some other stuff, and I need to combine them
+		\begin{itemize}
+			\item \texttt{git merge}
+		\end{itemize}
+		\item I want to try something, but I'm worried it'll break stuff
+		\begin{itemize}
+			\item \texttt{git branch}
+		\end{itemize}
+		\item Everything I've just done has made things worse; I want to go back to how it was
+		\begin{itemize}
+			\item \texttt{git reset --hard} (or \texttt{git stash})
+		\end{itemize}
+		\item This was working fine a week ago, but now it's broken
+		\begin{itemize}
+			\item \texttt{git bisect}
+		\end{itemize}
+		\item What was I thinking when I wrote this line?
+		\begin{itemize}
+			\item \texttt{git blame}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+\note[itemize]{
+	\item
+	Git can do a lot more than just the standard storing and sharing of versions.
+	It has a lot of benefits even just for a solo developer.
+	Today, I'm going to focus mostly on just getting you working with Git.
+	But next session, we'll go over some of the really helpful things you can do with it.
+	
+	\item
+	In the meantime, here's a taste of some of the things we can do with Git.
+	Have you ever found yourself in any of these situations?
+	Git has commands to solve them.
+}
+
 \end{document}
