@@ -311,6 +311,71 @@
 	That said, I'll be beginning with quite a lot of motivation and background before we get into the actual commands, so bear with me.
 }
 
+\section{Terminology}
+
+\subsection{History}
+
+\begin{frame}{What is a Git?}
+	\begin{columns}[onlytextwidth]
+		\begin{column}{0.6\textwidth}
+			git: An unpleasant, contemptible, or frustratingly obtuse person.\blfootnote{The Free Dictionary}
+		\end{column}
+		\hfill
+		\begin{column}{0.4\textwidth}
+			\centering
+			\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{linus}
+		\end{column}
+	\end{columns}
+	\blfootnote{Linus Torvalds, Linux Magazine 2002}
+\end{frame}
+\note[itemize]{
+	\item
+	Git is a version control system written by Linux Torvalds, the creator of Linux.
+	He created it to manage the Linux kernel when the licence for the previous version control system he used was revoked.
+	
+	\item
+	As for the name, Linus had this to say:
+	``I'm an egotistical bastard, and I name all my projects after myself. First `Linux', now `git'.''
+}
+
+\subsection{Disambiguation}
+
+\begin{frame}{Git vs GitHub}
+	Git and GitHub are not the same thing!
+	\medskip
+	\begin{itemize}
+		\item Git: version control system, runs locally
+		\begin{itemize}
+			\item Open source, maintained by Junio Hamano
+		\end{itemize}
+		\item GitHub: website and cloud server host
+		\begin{itemize}
+			\item Owned by Microsoft
+		\end{itemize}
+		\item GitLab, Bitbucket, SourceForge, etc.: other Git server hosts
+	\end{itemize}
+\end{frame}
+\note[itemize]{
+	\item
+	This is a mistake I've heard a lot of people making, so I'm just going to clarify right now: Git and GitHub are not the same thing.
+	
+	\item
+	Git is the version control tool.
+	It's the set of commands you run on your computer.
+	It's the thing originally written by Linus, and now maintained as an open source project.
+	
+	\item
+	GitHub is a website that hosts Git repositories.
+	They run a copy of Git, and serve as a place for you to store Git-managed files.
+	They're not the only such host: there are dozens of commercial ones.
+	You can even spin up a Git server on your own computer, and host your own.
+	
+	\item
+	Think of Git as a file manager, and GitHub as being your friend's hard drive (or Microsoft's hard drive in this case).
+	You can send files to your friend to back them up, or for them to pass on to other people.
+	Meanwhile, you've still got your own copy of your file manager, and your own copy of your files.
+}
+
 \section{Motivation}
 
 \subsection{General Use}
