@@ -7,7 +7,7 @@ notedoc := notes
 handoutdoc := handout
 content_tex_files := presentation.tex
 supporting_tex_files := theme.tex
-supporting_image_files := sha1.pdf phd-final.png xkcd-git.png snapshot-2001-01-19.png snapshot-2004-05-29.png snapshot-2008-10-18.png
+supporting_image_files := sha1.pdf phd-final.png xkcd-git.png linus.png snapshot-2001-01-19.png snapshot-2004-05-29.png snapshot-2008-10-18.png
 supporting_image_files := $(patsubst %,images/%,$(supporting_image_files))
 
 all: $(slidedoc).pdf $(notedoc).pdf $(handoutdoc).pdf
