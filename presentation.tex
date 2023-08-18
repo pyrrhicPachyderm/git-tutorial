@@ -3,13 +3,10 @@
 \graphicspath{{./images/}}
 
 %A command for unnumbered footnotes.
-%From https://latex.org/forum/viewtopic.php?t=30813
-\newcommand\blfootnote[1]{%
-	\begingroup
-	\renewcommand\thefootnote{}\footnote{#1}%
-	\addtocounter{footnote}{-1}%
-	\endgroup
-}
+%From https://tex.stackexchange.com/a/30723
+\makeatletter
+\def\blfootnote{\gdef\@thefnmark{}\@footnotetext}
+\makeatother
 
 \title{An Introduction to Git}
 \author{Christopher Brown}
