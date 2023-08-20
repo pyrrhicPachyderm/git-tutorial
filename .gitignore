@@ -9,5 +9,7 @@
 *.toc
 *.vrb
 
+#Images generated from other images.
 phd-*.png
 snapshot-*.png
+linus.png
