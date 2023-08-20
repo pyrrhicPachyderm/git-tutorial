@@ -25,6 +25,14 @@ all: $(slidedoc).pdf $(notedoc).pdf $(handoutdoc).pdf
 %.png: %.tif
 	convert $< $@
 
+#Crop all snapshot images to have the same aspect ratio.
+#Use the largest aspect ratio of any of them.
+snapshot_aspect_ratio := $(shell identify -format "%[fx:w/h]\n" images/snapshot-* | sort -g | tail -n 1)
+snapshot-%.png: snapshot-%.jpg
+	convert $< -gravity center -crop $(snapshot_aspect_ratio):1 +repage $@
+snapshot-%.png: snapshot-%.tif
+	convert $< -gravity center -crop $(snapshot_aspect_ratio):1 +repage $@
+
 clean:
 	@(\
 		shopt -s globstar;\
