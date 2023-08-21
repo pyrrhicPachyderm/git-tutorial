@@ -6,6 +6,13 @@
 
 \graphicspath{{./images/}}
 
+%Use itemize rather than enumerate for \note[item].
+%From https://tex.stackexchange.com/a/28969
+\AtBeginNote{%
+	\let\enumerate\itemize%
+	\let\endenumerate\enditemize%
+}
+
 %A command for unnumbered footnotes.
 %From https://tex.stackexchange.com/a/30723
 \makeatletter
@@ -20,31 +27,31 @@
 
 \begin{frame}
 	\titlepage
+	
+	\note[item]{
+		I'm going to teach this over several sessions.
+		Hopefully the first session will teach enough to just spin up a Git repository and start making commits.
+		But if that's all you ever do, you're missing out on most of the benefits that version control will give you.
+		So subsequent sessions will focus on how to get the most out of Git, and use it to be more productive.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	I'm going to teach this over several sessions.
-	Hopefully the first session will teach enough to just spin up a Git repository and start making commits.
-	But if that's all you ever do, you're missing out on most of the benefits that version control will give you.
-	So subsequent sessions will focus on how to get the most out of Git, and use it to be more productive.
-}
 
 \part{Prerequisites}
 
 \begin{frame}
 	\partpage
+	
+	\note[item]{
+		Before we start looking at Git, there're some prerequisites we need to go over.
+		
+		\item
+		Primarily, you'll need to know the very basics of the shell.
+		We'll use Git from the command line (the shell), so it'll help to be familiar with it.
+		
+		\item
+		There're also a few other things I'll explain the details of now, to save having to go off on tangents later.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	Before we start looking at Git, there're some prerequisites we need to go over.
-	
-	\item
-	Primarily, you'll need to know the very basics of the shell.
-	We'll use Git from the command line (the shell), so it'll help to be familiar with it.
-	
-	\item
-	There're also a few other things I'll explain the details of now, to save having to go off on tangents later.
-}
 
 \section{The Shell}
 
@@ -61,25 +68,25 @@
 	Mac OS X defaults to \texttt{zsh}.
 	
 	Git on Windows comes with a \texttt{bash} emulator.
+	
+	\note[item]{
+		You might have heard of the shell called the ``terminal'' or the ``command line''.
+		It's a text-based interface to your computer.
+		You can use it instead of a graphical user interface (GUI).
+		
+		\item
+		There are GUIs for Git, but it's good to know how to use it through the command line.
+		
+		\item
+		Different shells, \texttt{bash}, \texttt{zsh}, etc.\ are mostly based on the Bourne shell.
+		There are differences, but they're all similar enough that we shouldn't run into the differences here.
+		
+		\item
+		On Linux or Mac OS X, you should be able to search for and open the ``terminal''.
+		On Windows, you're looking for ``Git Bash''.
+		Open it now.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	You might have heard of the shell called the ``terminal'' or the ``command line''.
-	It's a text-based interface to your computer.
-	You can use it instead of a graphical user interface (GUI).
-	
-	\item
-	There are GUIs for Git, but it's good to know how to use it through the command line.
-	
-	\item
-	Different shells, \texttt{bash}, \texttt{zsh}, etc.\ are mostly based on the Bourne shell.
-	There are differences, but they're all similar enough that we shouldn't run into the differences here.
-	
-	\item
-	On Linux or Mac OS X, you should be able to search for and open the ``terminal''.
-	On Windows, you're looking for ``Git Bash''.
-	Open it now.
-}
 
 \subsection{Navigation}
 
@@ -98,21 +105,21 @@
 	Paths starting with \texttt{/} or \texttt{cd \textasciitilde} are \emph{absolute paths}.
 	
 	Others are \emph{relative paths}, and start from the current directory.
-\end{frame}
-\note[itemize]{
-	\item
-	The first thing to learn is how the directory structure is represented on the command line.
-	Directories and files have \emph{paths}: a list, one inside the other, of the directories in the tree structure reaching down to them.
-	Paths are separated by forward slashes.
-	Windows sometimes uses backslashes, but Git Bash does it properly with forward slashes.
 	
-	\item
-	The difference between absolute and relative paths is important in general.
-	Generally, your code should use relative paths whenever possible.
-	This is especially important in Git repositories.
-	Suppose someone else downloads your repo: they'll have a different username, or put it in a different place, so the absolute path will be different.
-	Use relative paths instead.
-}
+	\note[item]{
+		The first thing to learn is how the directory structure is represented on the command line.
+		Directories and files have \emph{paths}: a list, one inside the other, of the directories in the tree structure reaching down to them.
+		Paths are separated by forward slashes.
+		Windows sometimes uses backslashes, but Git Bash does it properly with forward slashes.
+		
+		\item
+		The difference between absolute and relative paths is important in general.
+		Generally, your code should use relative paths whenever possible.
+		This is especially important in Git repositories.
+		Suppose someone else downloads your repo: they'll have a different username, or put it in a different place, so the absolute path will be different.
+		Use relative paths instead.
+	}
+\end{frame}
 
 \begin{frame}{Moving Around}
 	\begin{itemize}
@@ -123,26 +130,26 @@
 		\end{itemize}
 		\item Right click in file manager to open command line there
 	\end{itemize}
+	
+	\note[item]{
+		At any point, your shell is in one directory: the \emph{working directory}.
+		\texttt{pwd} (print working directory) will tell you which directory you're in.
+		Try it now.
+		
+		\item
+		Before we start doing anything, we'll usually want to move to the correct directory.
+		We do this with \texttt{cd} (change directory).
+		
+		\item
+		\texttt{cd} can take a relative or absolute path.
+		This is when \texttt{..} to go up a directory becomes useful, and note that we can chain this or include it mid-path.
+		\texttt{cd} can also take the special argument \texttt{-} to go back to the most recent working directory.
+		Play around with it.
+		
+		\item
+		You can also open the command line directly in a directory, by right-clicking in the file manager.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	At any point, your shell is in one directory: the \emph{working directory}.
-	\texttt{pwd} (print working directory) will tell you which directory you're in.
-	Try it now.
-	
-	\item
-	Before we start doing anything, we'll usually want to move to the correct directory.
-	We do this with \texttt{cd} (change directory).
-	
-	\item
-	\texttt{cd} can take a relative or absolute path.
-	This is when \texttt{..} to go up a directory becomes useful, and note that we can chain this or include it mid-path.
-	\texttt{cd} can also take the special argument \texttt{-} to go back to the most recent working directory.
-	Play around with it.
-	
-	\item
-	You can also open the command line directly in a directory, by right-clicking in the file manager.
-}
 
 \subsection{Inspection}
 
@@ -155,30 +162,30 @@
 			\item \texttt{ls -al} does both
 		\end{itemize}
 	\end{itemize}
+	
+	\note[item]{
+		When you're in a directory, you want to know which files are there.
+		Or which directories, so you can \texttt{cd} further in.
+		\texttt{ls} tells you.
+		
+		\item
+		\texttt{ls} takes options, a.k.a. \emph{flags}.
+		\texttt{-a} (all) shows hidden files and directories, which start with a dot.
+		This is important, 'cause Git uses these.
+		\texttt{-l} (long) shows owner, permissions, size, date, etc.
+		
+		\item
+		A hyphen and a single letter is the convention for flags in the shell.
+		We can combine options by giving them sequentially.
+		A single hyphen followed by multiple letters also combines flags.
+		Order doesn't matter.
+		Demonstrate this.
+		
+		\item
+		Some programs take long options: these use two hyphens followed by a word.
+		We'll see these later on some Git commands.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	When you're in a directory, you want to know which files are there.
-	Or which directories, so you can \texttt{cd} further in.
-	\texttt{ls} tells you.
-	
-	\item
-	\texttt{ls} takes options, a.k.a. \emph{flags}.
-	\texttt{-a} (all) shows hidden files and directories, which start with a dot.
-	This is important, 'cause Git uses these.
-	\texttt{-l} (long) shows owner, permissions, size, date, etc.
-	
-	\item
-	A hyphen and a single letter is the convention for flags in the shell.
-	We can combine options by giving them sequentially.
-	A single hyphen followed by multiple letters also combines flags.
-	Order doesn't matter.
-	Demonstrate this.
-	
-	\item
-	Some programs take long options: these use two hyphens followed by a word.
-	We'll see these later on some Git commands.
-}
 
 \begin{frame}{Looking at Files}
 	\begin{itemize}
@@ -187,17 +194,17 @@
 		\item \texttt{tail}: print the last 10 lines of a file
 		\item \texttt{less}: open a file in the pager
 	\end{itemize}
-\end{frame}
-\note[itemize]{
-	\item
-	There are a variety of ways we can look at the contents of a file in the command line.
-	These all work within the command line, so they'll only work for text files.
 	
-	\item
-	The names are a bit funny.
-	\texttt{cat} comes from ``concatenate'', because it can print several files back-to-back.
-	\texttt{less} is a better version of \texttt{more}.
-}
+	\note[item]{
+		There are a variety of ways we can look at the contents of a file in the command line.
+		These all work within the command line, so they'll only work for text files.
+		
+		\item
+		The names are a bit funny.
+		\texttt{cat} comes from ``concatenate'', because it can print several files back-to-back.
+		\texttt{less} is a better version of \texttt{more}.
+	}
+\end{frame}
 
 \begin{frame}{Opening Files \& Directories}
 	\begin{itemize}
@@ -209,15 +216,15 @@
 		\end{itemize}
 		\item Using these on a directory opens the file manager
 	\end{itemize}
-\end{frame}
-\note[itemize]{
-	\item
-	If you want to use your normal text editor, or work with non-text files, you can open files as though you'd double-clicked them in your file manager.
-	How to do this differs by OS.
 	
-	\item
-	You can also use these to open your file manager, which can be helpful to move or copy files if you're not familiar with doing so on the command line.
-}
+	\note[item]{
+		If you want to use your normal text editor, or work with non-text files, you can open files as though you'd double-clicked them in your file manager.
+		How to do this differs by OS.
+		
+		\item
+		You can also use these to open your file manager, which can be helpful to move or copy files if you're not familiar with doing so on the command line.
+	}
+\end{frame}
 
 \subsection{Modification}
 
@@ -237,13 +244,13 @@
 			\item \texttt{rm -r} removes a directory and everything inside: DANGER!
 		\end{itemize}
 	\end{itemize}
+	
+	\note[item]{
+		We can use all sorts of commands to create, remove, copy, or remove files or directories.
+		I won't go into the details now, and you should be able to do most of this with your file manager.
+		But this might be useful in future, and you might see me using these out of habit.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	We can use all sorts of commands to create, remove, copy, or remove files or directories.
-	I won't go into the details now, and you should be able to do most of this with your file manager.
-	But this might be useful in future, and you might see me using these out of habit.
-}
 
 \section{Hashes}
 
@@ -253,25 +260,25 @@
 	\centering
 	\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{sha1}
 	\blfootnote{Cryptographic Hash Function by Jorge Stolfi}
+	
+	\note[item]{
+		A hash function converts some arbitrary input to a fixed-length string of seemingly-random input.
+		It always converts the same input to the same output.
+		But small changes in input cause large changes in output.
+		
+		\item
+		This example uses the SHA1 hash function, the same one used by Git.
+		We'll get to why Git needs this later.
+		
+		\item
+		You can use \texttt{sha1sum} at your command line.
+		(Demonstrate this a bit.)
+		
+		\item
+		Note that you can use this hash huge files, and still get a fixed-length output.
+		It's theoretically possible for two different files to give the same output, but astronomically unlikely.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	A hash function converts some arbitrary input to a fixed-length string of seemingly-random input.
-	It always converts the same input to the same output.
-	But small changes in input cause large changes in output.
-	
-	\item
-	This example uses the SHA1 hash function, the same one used by Git.
-	We'll get to why Git needs this later.
-	
-	\item
-	You can use \texttt{sha1sum} at your command line.
-	(Demonstrate this a bit.)
-	
-	\item
-	Note that you can use this hash huge files, and still get a fixed-length output.
-	It's theoretically possible for two different files to give the same output, but astronomically unlikely.
-}
 
 \subsection{Uses}
 
@@ -281,39 +288,39 @@
 		\item Security: storing passwords
 		\item Version control: identifying versions
 	\end{itemize}
+	
+	\note[item]{
+		Hashes have a bunch of different uses.
+		
+		\item
+		Suppose you download a huge file, and you want to know if the download got corrupted.
+		The server hashes the file, and you hash the file, and you compare hashes.
+		If one small bit in the file is wrong, the hash will be totally different.
+		
+		\item
+		Websites that need a password should never store your password in plain text.
+		If they did, and they got hacked, your password would be available for everyone to see.
+		Instead, they store a hash of your password.
+		When you submit your password, they check the hash of that against their stored hash.
+		Hashes are not easily reversible, so someone who hacks the server and gets the hash can't easily get your original password.
+		
+		\item
+		Our use is in version control.
+		You can hash a file.
+		Then, to check if the file's changed, you can just hash it again and check if the hash has changed.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	Hashes have a bunch of different uses.
-	
-	\item
-	Suppose you download a huge file, and you want to know if the download got corrupted.
-	The server hashes the file, and you hash the file, and you compare hashes.
-	If one small bit in the file is wrong, the hash will be totally different.
-	
-	\item
-	Websites that need a password should never store your password in plain text.
-	If they did, and they got hacked, your password would be available for everyone to see.
-	Instead, they store a hash of your password.
-	When you submit your password, they check the hash of that against their stored hash.
-	Hashes are not easily reversible, so someone who hacks the server and gets the hash can't easily get your original password.
-	
-	\item
-	Our use is in version control.
-	You can hash a file.
-	Then, to check if the file's changed, you can just hash it again and check if the hash has changed.
-}
 
 \part{Introduction to Git}
 
 \begin{frame}
 	\partpage
+	
+	\note[item]{
+		With that out of the way, it's time to start explaining Git itself.
+		That said, I'll be beginning with quite a lot of motivation and background before we get into the actual commands, so bear with me.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	With that out of the way, it's time to start explaining Git itself.
-	That said, I'll be beginning with quite a lot of motivation and background before we get into the actual commands, so bear with me.
-}
 
 \section{Terminology}
 
@@ -331,16 +338,16 @@
 		\end{column}
 	\end{columns}
 	\blfootnote{Linus Torvalds, Linux Magazine 2002}
-\end{frame}
-\note[itemize]{
-	\item
-	Git is a version control system written by Linux Torvalds, the creator of Linux.
-	He created it to manage the Linux kernel when the licence for the previous version control system he used was revoked.
 	
-	\item
-	As for the name, Linus had this to say:
-	``I'm an egotistical bastard, and I name all my projects after myself. First `Linux', now `git'.''
-}
+	\note[item]{
+		Git is a version control system written by Linux Torvalds, the creator of Linux.
+		He created it to manage the Linux kernel when the licence for the previous version control system he used was revoked.
+		
+		\item
+		As for the name, Linus had this to say:
+		``I'm an egotistical bastard, and I name all my projects after myself. First `Linux', now `git'.''
+	}
+\end{frame}
 
 \subsection{Disambiguation}
 
@@ -358,27 +365,27 @@
 		\end{itemize}
 		\item GitLab, Bitbucket, SourceForge, etc.: other Git server hosts
 	\end{itemize}
+	
+	\note[item]{
+		This is a mistake I've heard a lot of people making, so I'm just going to clarify right now: Git and GitHub are not the same thing.
+		
+		\item
+		Git is the version control tool.
+		It's the set of commands you run on your computer.
+		It's the thing originally written by Linus, and now maintained as an open source project.
+		
+		\item
+		GitHub is a website that hosts Git repositories.
+		They run a copy of Git, and serve as a place for you to store Git-managed files.
+		They're not the only such host: there are dozens of commercial ones.
+		You can even spin up a Git server on your own computer, and host your own.
+		
+		\item
+		Think of Git as a file manager, and GitHub as being your friend's hard drive (or Microsoft's hard drive in this case).
+		You can send files to your friend to back them up, or for them to pass on to other people.
+		Meanwhile, you've still got your own copy of your file manager, and your own copy of your files.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	This is a mistake I've heard a lot of people making, so I'm just going to clarify right now: Git and GitHub are not the same thing.
-	
-	\item
-	Git is the version control tool.
-	It's the set of commands you run on your computer.
-	It's the thing originally written by Linus, and now maintained as an open source project.
-	
-	\item
-	GitHub is a website that hosts Git repositories.
-	They run a copy of Git, and serve as a place for you to store Git-managed files.
-	They're not the only such host: there are dozens of commercial ones.
-	You can even spin up a Git server on your own computer, and host your own.
-	
-	\item
-	Think of Git as a file manager, and GitHub as being your friend's hard drive (or Microsoft's hard drive in this case).
-	You can send files to your friend to back them up, or for them to pass on to other people.
-	Meanwhile, you've still got your own copy of your file manager, and your own copy of your files.
-}
 
 \section{Motivation}
 
@@ -388,25 +395,25 @@
 	\centering
 	\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{phd-final}
 	\blfootnote{Piled Higher and Deeper by Jorge Cham}
+	
+	\note[item]{
+		Why do we use Git?
+		The main things is that it allows us to keep different versions in a well-controlled fashion.
+		It avoids the stereotypical proliferation of poorly named ``final'' versions.
+		
+		\item
+		It's also very useful for any sort of collaborative effort.
+		Have you ever done any sort of collaborative project where you're emailing files back and forth.
+		Nobody can keep track of which is the most recent version.
+		And if you both change a file at the same time, how do you combine the versions?
+		Git handles the versioning for you, and also has a very neat algorithm for merging two sets of changes into a version with both changes.
+		
+		\item
+		Version control is also very useful for reproducible research.
+		When you share a paper, you can use version control to provide a snapshot of the code that produced it.
+		Then, even if you keep working on that code, that snapshot exists for you or others to reproduce that work.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	Why do we use Git?
-	The main things is that it allows us to keep different versions in a well-controlled fashion.
-	It avoids the stereotypical proliferation of poorly named ``final'' versions.
-	
-	\item
-	It's also very useful for any sort of collaborative effort.
-	Have you ever done any sort of collaborative project where you're emailing files back and forth.
-	Nobody can keep track of which is the most recent version.
-	And if you both change a file at the same time, how do you combine the versions?
-	Git handles the versioning for you, and also has a very neat algorithm for merging two sets of changes into a version with both changes.
-	
-	\item
-	Version control is also very useful for reproducible research.
-	When you share a paper, you can use version control to provide a snapshot of the code that produced it.
-	Then, even if you keep working on that code, that snapshot exists for you or others to reproduce that work.
-}
 
 \subsection{Fixing Problems}
 
@@ -437,19 +444,19 @@
 			\item \texttt{git blame}
 		\end{itemize}
 	\end{itemize}
-\end{frame}
-\note[itemize]{
-	\item
-	Git can do a lot more than just the standard storing and sharing of versions.
-	It has a lot of benefits even just for a solo developer.
-	Today, I'm going to focus mostly on just getting you working with Git.
-	But next session, we'll go over some of the really helpful things you can do with it.
 	
-	\item
-	In the meantime, here's a taste of some of the things we can do with Git.
-	Have you ever found yourself in any of these situations?
-	Git has commands to solve them.
-}
+	\note[item]{
+		Git can do a lot more than just the standard storing and sharing of versions.
+		It has a lot of benefits even just for a solo developer.
+		Today, I'm going to focus mostly on just getting you working with Git.
+		But next session, we'll go over some of the really helpful things you can do with it.
+		
+		\item
+		In the meantime, here's a taste of some of the things we can do with Git.
+		Have you ever found yourself in any of these situations?
+		Git has commands to solve them.
+	}
+\end{frame}
 
 \section{The Git Parable}
 
@@ -459,13 +466,13 @@
 	\centering
 	\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{xkcd-git}
 	\blfootnote{xkcd by Randall Munroe}
+	
+	\note[item]{
+		A lot of people teach Git by this method: they show the standard \texttt{pull}, \texttt{add}, \texttt{commit}, \texttt{push} workflow, and leave it at that.
+		The problem with doing this is that, while it allows you to work with other people who use Git, you get very little benefit from using Git that way.
+		You won't understand enough to do any of the cool and useful things I just demonstrated.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	A lot of people teach Git by this method: they show the standard \texttt{pull}, \texttt{add}, \texttt{commit}, \texttt{push} workflow, and leave it at that.
-	The problem with doing this is that, while it allows you to work with other people who use Git, you get very little benefit from using Git that way.
-	You won't understand enough to do any of the cool and useful things I just demonstrated.
-}
 
 \begin{frame}{How To Explain Git}
 	The Git Parable, by Tom Preston-Werner
@@ -474,19 +481,19 @@
 	\end{itemize}
 	Suppose you only have a text editor and a file manager.
 	How would you develop version control?
-\end{frame}
-\note[itemize]{
-	\item
-	Instead, I'm going to explain how Git actually works.
-	It can appear quite complicated, so we're going to build it from the ground up.
-	I'm shamelessly stealing from the best explanation of Git I've seen: ``the Git Parable'', by Tom Preston--Werner, co-founder of GitHub.
 	
-	\item
-	The Git Parable works as follows.
-	Suppose Git doesn't exist; suppose you don't have any fancy software at all.
-	You've just got a text editor and a file manager, and you're setting out on a massive coding project that you need to version control.
-	How, with just your text editor and file manager, would you control your versions?
-}
+	\note[item]{
+		Instead, I'm going to explain how Git actually works.
+		It can appear quite complicated, so we're going to build it from the ground up.
+		I'm shamelessly stealing from the best explanation of Git I've seen: ``the Git Parable'', by Tom Preston--Werner, co-founder of GitHub.
+		
+		\item
+		The Git Parable works as follows.
+		Suppose Git doesn't exist; suppose you don't have any fancy software at all.
+		You've just got a text editor and a file manager, and you're setting out on a massive coding project that you need to version control.
+		How, with just your text editor and file manager, would you control your versions?
+	}
+\end{frame}
 
 \subsection{Snapshots}
 
@@ -510,20 +517,20 @@
 			2008-10-18
 		\end{column}
 	\end{columns}
-\end{frame}
-\note[itemize]{
-	\item
-	Alfred is a friend of yours who works at a ``Special Moments'' photo boutique.
-	He tells you the story of a woman who brings her child in for a portrait on the same day every year.
-	``She brings the photos from all the past years with her,'' Alfred tells you.
-	``She likes to remember what her daughter was like at each different stage, as if the snapshots really let her move back and forth in time to those saved memories.''
 	
-	\item
-	This gives you an idea.
-	Snapshots, like save points in a video game, are what you want for your version control system.
-	What if you could take snapshots of your codebase at any time and resurrect that code on demand?
-	So you go running back to your computer and start working.
-}
+	\note[item]{
+		Alfred is a friend of yours who works at a ``Special Moments'' photo boutique.
+		He tells you the story of a woman who brings her child in for a portrait on the same day every year.
+		``She brings the photos from all the past years with her,'' Alfred tells you.
+		``She likes to remember what her daughter was like at each different stage, as if the snapshots really let her move back and forth in time to those saved memories.''
+		
+		\item
+		This gives you an idea.
+		Snapshots, like save points in a video game, are what you want for your version control system.
+		What if you could take snapshots of your codebase at any time and resurrect that code on demand?
+		So you go running back to your computer and start working.
+	}
+\end{frame}
 
 \begin{frame}[t]{Snapshot Directories}
 	\only<+|handout:0>{
@@ -575,26 +582,26 @@
 			.3 read-genomes.R.
 		}
 	}
+	
+	\note[item]{
+		You begin with a \texttt{project} directory.
+		This will contain everything for the project, including all your versions.
+		
+		\item
+		Within this, you create a \texttt{working} directory.
+		This will contain all the code, however many files that is.
+		This is the version you'll change as you work.
+		
+		\item
+		When you've a written a feature, you make sure everything's saved, then copy the entire \texttt{working} directory to \texttt{snapshot-0}.
+		You make sure never to change any of the files in \texttt{snapshot-0}; they're permanently fixed.
+		You keep making changes in \texttt{working}, and when you're done with the next feature, you again copy the whole of \texttt{working} to \texttt{snapshot-1}.
+		
+		\item
+		These numbers aren't very helpful, so you create a file called \texttt{message} in each snapshot directory.
+		This records the date of creation, and a summary of the work you did in that snapshot.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	You begin with a \texttt{project} directory.
-	This will contain everything for the project, including all your versions.
-	
-	\item
-	Within this, you create a \texttt{working} directory.
-	This will contain all the code, however many files that is.
-	This is the version you'll change as you work.
-	
-	\item
-	When you've a written a feature, you make sure everything's saved, then copy the entire \texttt{working} directory to \texttt{snapshot-0}.
-	You make sure never to change any of the files in \texttt{snapshot-0}; they're permanently fixed.
-	You keep making changes in \texttt{working}, and when you're done with the next feature, you again copy the whole of \texttt{working} to \texttt{snapshot-1}.
-	
-	\item
-	These numbers aren't very helpful, so you create a file called \texttt{message} in each snapshot directory.
-	This records the date of creation, and a summary of the work you did in that snapshot.
-}
 
 \begin{frame}[fragile]{Commit Messages}
 	\texttt{snapshot-0/message}
@@ -611,20 +618,20 @@
 		This should allow larger values of retmax,
 		speeding up the download.
 	\end{lstlisting}
+	
+	\note[item]{
+		The message files for a couple of snapshots might look like this, with a date and time of creation, and a summary of what work was done to create them.
+		
+		\item
+		I've written the date and time in ISO format: year, month, day, 24 hour time, and time zone offset.
+		Git actually stores them in UNIX format: the number of seconds since the beginning of 1970, plus time zone offset.
+		But that's not human readable.
+		
+		\item
+		Note that each snapshot represents a single, small unit of work.
+		Per Git convention, I've written the summary messages in the imperative tense: ``do this''.
+		We can use extra lines to provide extra information, such as the justification for a change.
+	}
 \end{frame}
-\note[itemize]{
-	\item
-	The message files for a couple of snapshots might look like this, with a date and time of creation, and a summary of what work was done to create them.
-	
-	\item
-	I've written the date and time in ISO format: year, month, day, 24 hour time, and time zone offset.
-	Git actually stores them in UNIX format: the number of seconds since the beginning of 1970, plus time zone offset.
-	But that's not human readable.
-	
-	\item
-	Note that each snapshot represents a single, small unit of work.
-	Per Git convention, I've written the summary messages in the imperative tense: ``do this''.
-	We can use extra lines to provide extra information, such as the justification for a change.
-}
 
 \end{document}
