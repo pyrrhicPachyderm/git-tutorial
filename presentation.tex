@@ -3,8 +3,9 @@
 \lstset{basicstyle=\ttfamily}
 
 \usepackage{tikz}
-\usetikzlibrary{graphs,graphdrawing,arrows.meta}
+\usetikzlibrary{graphs,graphdrawing,arrows.meta,positioning}
 \usegdlibrary{trees}
+\tikzset{branch/.style={green!70!black},tag/.style={yellow!85!black}}
 
 \input{theme}
 
@@ -776,6 +777,85 @@
 		
 		\item
 		Just this simple mecahnism suffices to store the entire structure of the tree, and the entire history for any snapshot.
+	}
+\end{frame}
+
+\begin{frame}{Branch Names}
+	\centering
+	\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},node distance=1em]
+		\onslide<+->{
+			\graph[tree layout,grow'=up,fresh nodes] { %fresh nodes allows duplicate node names.
+				snapshot0/"snapshot-0" <- "\rvdots" <- snapshot99/"snapshot-99" <- {
+					snapshot100/"snapshot-100" <- "\rvdots" <- snapshot109/"snapshot-109",
+					snapshot110/"snapshot-110"
+				}
+			};
+		}
+		\onslide<+->{
+			\node[branch,right=of snapshot109] (master) {master} edge[->,branch] (snapshot109);
+			\node[branch,right=of snapshot110] (v1maintenance) {v1.0-maintenance} edge[->,branch] (snapshot110);
+		}
+		\onslide<+->{
+			\node[tag,right=of snapshot99] (v1) {v1.0.0} edge[->,tag] (snapshot99);
+		}
+	\end{tikzpicture}
+	
+	\note[item]{
+		So, the code history is now a tree, and we can trace any snapshot back to the root.
+		This is great; we can now have multiple lines of development at once.
+		
+		\item
+		But there's a problem.
+		If we're just looking at the list of all snapshots, how do we know which is the most recent one on each branch?
+		It was fine when they were sequential: the highest number was the most recent.
+		But what about now?
+		
+		\item
+		So, we need to keep a list of the most recent snapshot for each branch.
+		This is a list of pointers to snapshots, one for each branch.
+		We've got two branches now.
+		The one we're mostly working on and developing new features on, we'll call \texttt{master}.
+		The one for fixing bugs in the release version, we'll call it \texttt{v1.0-maintenance}.
+		
+		\item
+		While we're at it, it'd be nice to keep track of some other important snapshots, like the \texttt{snapshot-99} that we released to the public.
+		We'll point at this one, and call it \texttt{v1.0.0}.
+	}
+\end{frame}
+
+\begin{frame}[fragile]{Storing Branches}
+	\texttt{branches}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		master snapshot-109
+		v1.0-maintenance snapshot-110
+	\end{lstlisting}
+	\bigskip
+	\texttt{tags}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		v1.0.0 snapshot-99
+	\end{lstlisting}
+	
+	\note[item]{
+		So, how will we store these branch pointers.
+		We'll create a special file called \texttt{branches}.
+		\texttt{branches} doesn't sit in \texttt{working}, or in any of the snapshots.
+		It's got to live somewhere separate.
+		In this parable, we'd keep it in the top level project directory.
+		In practice, Git keeps it in a special \texttt{.git} directory.
+		
+		\item
+		So we just have a file listing each branch, and which snapshot is its tip.
+		Whenever we create a new snapshot on the end of a branch, we need to update this file.
+		
+		\item
+		The other special snapshots, we'll call ``tags'', and we'll put them in another file (also called \texttt{tags}).
+		Tags are exactly like branches, except that they never move.
+		That snapshot will always have been the v1.0.0 release.
+		
+		\item
+		A note:
+		\texttt{master} is the default name Git will use for the first branch when you create a repository, but there's nothing special about it.
+		GitHub has recently been encouraging people to call it \texttt{main} instead.
 	}
 \end{frame}
 
