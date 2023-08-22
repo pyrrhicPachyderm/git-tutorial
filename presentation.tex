@@ -1377,4 +1377,57 @@
 	}
 \end{frame}
 
+\subsection{Initialisation}
+
+\begin{frame}{\texttt{git init}}
+	\begin{itemize}
+		\item \texttt{mkdir project}
+		\item \texttt{cd project}
+		\item \texttt{git init}
+	\end{itemize}
+	
+	\note[item]{
+		It's time to create a repository!
+		Pick somewhere you want to create the repository.
+		Either open a terminal there from the file manager or \texttt{cd} there.
+		
+		\item
+		First, we create a directory to contain our repository.
+		I'm just going to call it \texttt{project}.
+		Feel free to come up with a different name: maybe \texttt{git-tutorial}.
+		Don't use a space, though, use a hyphen, or an underscore.
+		
+		\item
+		Then, we \texttt{cd} into that directory.
+		
+		\item
+		Finally, we initialise a Git repository.
+		This won't have any immediately obvious effect.
+	}
+\end{frame}
+
+\begin{frame}{A Peek at the Plumbing}
+	\begin{itemize}
+		\item \texttt{ls}
+		\item \texttt{ls -a}
+		\item \texttt{ls .git}
+	\end{itemize}
+	
+	\note[item]{
+		So, what did \texttt{git init} even do?
+		If we list files, we don't see anything.
+		
+		\item
+		If you list \emph{all} files, you'd see a directory called \texttt{.git}.
+		Files and directories beginning with a dot are hidden in UNIX systems, so we needed the flag to see this.
+		If we give \texttt{ls} a directory, it will list things in that directory.
+		Let's take a peek inside \texttt{.git}.
+		
+		\item
+		\texttt{.git} is where Git keeps everything it does.
+		All your snapshots, all your message files, your lists of branches and tags, and your staging area will all live inside \texttt{.git}.
+		The rest of the project directory is all your working area.
+	}
+\end{frame}
+
 \end{document}
