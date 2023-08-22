@@ -1662,4 +1662,96 @@
 	}
 \end{frame}
 
+\subsection{Remotes}
+
+\begin{frame}{Setting Up a Remote}
+	\begin{itemize}
+		\item Create a GitHub repository.
+		\item \texttt{git remote add origin https://github.com/pyrrhicPachyderm/project.git}
+	\end{itemize}
+	
+	\note[item]{
+		Now, it's time to share your files with some friends.
+		
+		\item
+		We'll need to begin by hopping out of Git for a moment and going over to GitHub, in your browser.
+		There, you can create a repository, and retrieve the URL for it.
+		
+		\item
+		Then, come back to Git, and add it as a remote.
+		All we've done is tell Git that the repository exists on GitHub.
+		We've not sent anything up or down yet.
+		
+		\item
+		You can register several remotes, under different names.
+		\texttt{origin} is like \texttt{master}; it's a convention, but not required.
+		It's called \texttt{origin}, 'cause it's usually where you downloaded the files from in the first place.
+		Though in this case, you made them yourself, so it's less apropriate.
+	}
+\end{frame}
+
+\begin{frame}{Pushing}
+	\begin{itemize}
+		\item \texttt{git push origin master}
+		\item \texttt{git push -u origin master}
+		\item \texttt{git push}
+		\item \texttt{git status}
+		\item \texttt{git log}
+	\end{itemize}
+	
+	\note[item]{
+		\texttt{git push} takes all your local commits on a branch and sends them up to be stored on the remote.
+		In this case, you tell it you're explicitly pushing the \texttt{master} branch ti the \texttt{origin} remote.
+		
+		\item
+		You don't want to type that every time, so \texttt{-u} tells the \texttt{master} branch to track the \texttt{origin} remote.
+		From then on, just \texttt{git push} will work.
+		
+		\item
+		Check out \texttt{git status} and \texttt{git log}; they now have some extra information.
+	}
+\end{frame}
+
+\begin{frame}{Cloning}
+	\begin{itemize}
+		\item \texttt{cd ..}
+		\item \texttt{git clone https://github.com/zoe/project.git zoe-project}
+		\item \texttt{cd zoe-project}
+		\item \texttt{git status}
+		\item \texttt{git log}
+	\end{itemize}
+	
+	\note[item]{
+		Now that you've all pushed, it's time to look at what other people have been up to.
+		
+		\item
+		There's a handy way to get a whole repository down from GitHub, and that's \texttt{git clone}.
+		Swap with a neighbour, and clone their repository.
+		We \texttt{cd} up first to keep the two repositories separate.
+		
+		\item
+		\texttt{cd} into their repository, and look around.
+	}
+\end{frame}
+
+\begin{frame}{Pulling}
+	\begin{itemize}
+		\item Get your neighbour to \texttt{git push}
+		\item \texttt{git pull}
+		\item \texttt{git log}
+	\end{itemize}
+	
+	\note[item]{
+		Now that you've got your neighbour's repository, sharing new commits is easy.
+		They push, and you pull.
+		
+		\item
+		Everyone, go back to their own repositories, make a change, add it, and push it.
+		Then, go into your neighbour's repository, and pull their change.
+		
+		\item
+		You need to do it that way around, as you won't be able to push directly to their repository unless they give you permission to.
+	}
+\end{frame}
+
 \end{document}
