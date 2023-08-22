@@ -717,7 +717,7 @@
 		\begin{column}{0.4\textwidth}
 			\centering
 			\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]}]
-				\graph[trie,tree layout,grow=up] { %trie allows duplicate node names.
+				\graph[trie,tree layout,grow'=up] { %trie allows duplicate node names.
 					"snapshot-0" <- "\rvdots" <- "snapshot-99" <- {
 						"snapshot-100" <- "\rvdots" <- "snapshot-109",
 						"snapshot-110"
