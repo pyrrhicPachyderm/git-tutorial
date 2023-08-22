@@ -25,10 +25,12 @@ all: slides.pdf notes.pdf slides-and-notes.pdf handout.pdf
 #Crop all snapshot images to have the same aspect ratio.
 #Use the largest aspect ratio of any of them.
 snapshot_aspect_ratio := $(shell identify -format "%[fx:w/h]\n" images/snapshot-*.tif images/snapshot-*.jpg | sort -g | tail -n 1)
+snapshot_width := 1000
+snapshot_size := $(snapshot_width)x$(shell python -c 'print(round($(snapshot_width)/$(snapshot_aspect_ratio)))')
 snapshot-%.png: snapshot-%.jpg
-	convert $< -gravity center -crop $(snapshot_aspect_ratio):1 +repage $@
+	convert $< -gravity center -crop $(snapshot_aspect_ratio):1 -resize $(snapshot_size) +repage $@
 snapshot-%.png: snapshot-%.tif
-	convert $< -gravity center -crop $(snapshot_aspect_ratio):1 +repage $@
+	convert $< -gravity center -crop $(snapshot_aspect_ratio):1 -resize $(snapshot_size) +repage $@
 
 clean:
 	@(\
