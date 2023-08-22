@@ -718,9 +718,9 @@
 			\centering
 			\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]}]
 				\graph[tree layout,grow'=up,fresh nodes] { %fresh nodes allows duplicate node names.
-					"snapshot-0" <- "\rvdots" <- "snapshot-99" <- {
-						"snapshot-100" <- "\rvdots" <- "snapshot-109",
-						"snapshot-110"
+					snapshot0/"snapshot-0" <- "\rvdots" <- snapshot99/"snapshot-99" <- {
+						snapshot100/"snapshot-100" <- "\rvdots" <- snapshot109/"snapshot-109",
+						snapshot110/"snapshot-110"
 					}
 				};
 			\end{tikzpicture}
