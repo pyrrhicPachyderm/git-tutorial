@@ -1122,4 +1122,60 @@
 	}
 \end{frame}
 
+\subsection{Rewriting History}
+
+\begin{frame}{Mistakes Were Made}
+	\centering
+	\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},subgraph text top=text centered,subgraph nodes={font=\bfseries},node distance=1em]
+		\graph[fresh nodes,tree layout,grow'=up] {
+			6d97fce <- "\rvdots" <- 4435b31 <- 6146273[red] <- 819c08e <- 1854c54
+		};
+		\node[branch,right=of 4435b31] (master) {master} edge[->,branch] (4435b31);
+		\node[branch,right=of 1854c54] (drunk) {drunk} edge[->,branch] (1854c54);
+	\end{tikzpicture}
+	
+	\note[item]{
+		So, like all good developers, you like to keep your code clean and well organised.
+		And now that you're also storing all the history of your code, this extends to wanting to keep the history well groomed as well.
+		Unfortunately, you had a few too many pints at the pub last night, then came home to your computer and started coding.
+		You've produced a few snapshots along the way, and looking at them in the cold light of morning, you're cringing a little.
+		
+		\item
+		You've at least confined your mistakes to the \texttt{drunk} branch.
+		You could just forget about that branch; you don't have to touch it again if you don't want to.
+		But surprisingly enough, the code itself is good.
+		But you made a lot of mistakes in this snapshot in red, and only fixed them later.
+		
+		\item
+		You'd like to keep the code in the last snapshot here, but you don't want all your mistakes immortalised for posterity.
+		What can you do?
+	}
+\end{frame}
+
+\begin{frame}{Again, But Cleanly}
+	\centering
+	\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},subgraph text top=text centered,subgraph nodes={font=\bfseries},node distance=1em]
+		\graph[fresh nodes,tree layout,grow'=up] {
+			6d97fce <- "\rvdots" <- 4435b31 <- {
+				6146273[red] <- 819c08e <- 1854c54,
+				40119c8 <- 13b7d9c
+			}
+		};
+		\node[branch,right=of 4435b31] (master) {master} edge[->,branch] (4435b31);
+		\node[branch,right=of 13b7d9c] (drunk) {drunk} edge[->,branch] (13b7d9c);
+	\end{tikzpicture}
+	
+	\note[item]{
+		What you can do, is you can create another set of snapshots, making the same changes to the code, but how you wish you'd done it.
+		Then you just go into your \texttt{branches} files, and point the \texttt{drunk} branch at your new snapshot instead.
+		Note that the snapshots at the tips here have exactly the same content in the files.
+		But because they have different parents and different times, they have different hashes.
+		
+		\item
+		Now you can send this snapshot to Zoe, and so you still get your good code.
+		But you never have to send her those other three snapshots, you can bury your embarrassment in the depths of your hard drive.
+		The snapshots still exist, but there's no branch pointing to them, so you're unlikely to ever stumble across them.
+	}
+\end{frame}
+
 \end{document}
