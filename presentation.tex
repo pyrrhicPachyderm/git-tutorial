@@ -716,13 +716,16 @@
 		\hfill
 		\begin{column}{0.4\textwidth}
 			\centering
-			\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]}]
+			\newcommand\treediagram{
 				\graph[tree layout,grow'=up,fresh nodes] { %fresh nodes allows duplicate node names.
 					snapshot0/"snapshot-0" <- "\rvdots" <- snapshot99/"snapshot-99" <- {
 						snapshot100/"snapshot-100" <- "\rvdots" <- snapshot109/"snapshot-109",
 						snapshot110/"snapshot-110"
 					}
 				};
+			}
+			\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]}]
+				\treediagram
 			\end{tikzpicture}
 		\end{column}
 	\end{columns}
