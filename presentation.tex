@@ -1836,6 +1836,71 @@
 	}
 \end{frame}
 
+\section{Branches}
+
+\subsection{Splitting}
+
+\begin{frame}{Creating Branches}
+	\begin{itemize}
+		\item \texttt{git branch}
+		\item \texttt{git branch beta}
+		\item \texttt{git branch}
+		\item \texttt{git checkout -b feature}
+		\item \texttt{git branch}
+		\item \texttt{git checkout -b master}
+	\end{itemize}
+	
+	\note[item]{
+		We already how branching works in theory, so now let's see it in practice.
+		
+		\item
+		\texttt{git branch} just lists branches, including pointing out which one we're on.
+		
+		\item
+		\texttt{git branch name} creates a branch with a certain name.
+		But it doesn't switch us to it, which might unhelpful.
+		
+		\item
+		\texttt{git checkout -b name} creates a branch and checks it out.
+		This can be more helpful.
+		It fails if the branch already exists.
+	}
+\end{frame}
+
+\begin{frame}{Switching Branches}
+	\begin{itemize}
+		\item \texttt{git checkout feature}
+		\item \texttt{git checkout master}
+	\end{itemize}
+	
+	\note[item]{
+		To switch to another branch, it's just \texttt{git checkout}.
+		We already saw this used to reattach our HEAD to the \texttt{master} branch.
+		Well, it can attach our HEAD to any branch.
+		
+		\item
+		HEAD is just another pointer, and it can either be pointing to a commit, or to a branch which in turn points to a commit.
+	}
+\end{frame}
+
+\subsection{Merging}
+
+\begin{frame}{Switching Branches}
+	\begin{itemize}
+		\item \texttt{git checkout master}
+		\item \texttt{git merge feature}
+	\end{itemize}
+	
+	\note[item]{
+		If we want to merge two branches, we check one of them out and merge the other into it.
+		
+		\item
+		It's a very common development paradigm that every new feature gets developed on a branch (with an appropriate name).
+		Then that branch gets merged into the \texttt{master} branch when the feature's ready.
+		That's what this example depicts.
+	}
+\end{frame}
+
 \section{Collaborating}
 
 \subsection{Remotes}
