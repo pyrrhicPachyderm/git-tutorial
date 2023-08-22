@@ -1574,4 +1574,92 @@
 	}
 \end{frame}
 
+\subsection{Making Changes}
+
+\begin{frame}{Making Changes}
+	\begin{itemize}
+		\item Change the file
+		\item \texttt{git status}
+		\item \texttt{git diff}
+	\end{itemize}
+	
+	\note[item]{
+		Make a change to the file.
+		Add a line, or change an existing one.
+		If you've still got your text editor open, just do it there and save it.
+		
+		\item
+		Run \texttt{git status}.
+		We've got changes that have not been staged.
+		
+		\item
+		Run \texttt{git diff} to see the changes.
+		This, the diff, is one of the best features of Git.
+		You've already seen it with \texttt{git show}, but here's another instance of it.
+		\texttt{git diff} by itself will tell you what's in your working directory, but not staged.
+		You'll see plenty more uses for \texttt{git diff} later.
+	}
+\end{frame}
+
+\begin{frame}{Adding Changes}
+	\begin{itemize}
+		\item \texttt{git add script.R}
+		\item \texttt{git add -p}
+		\item \texttt{git status}
+		\item \texttt{reset}
+	\end{itemize}
+	
+	\note[item]{
+		Before we can commit our changes, we need to add them to the staging area.
+		Again, we use \texttt{git add}.
+		
+		\item
+		We can add the entire file, or even everything in the working directory, but I recommend against these.
+		\texttt{git add -p} gives us an interactive choice of what to add or not.
+		I \emph{always} use this: it's a great time to check that what you're adding is one cohesive change, and to proofread it.
+		
+		\item
+		The run \texttt{git status} again.
+		You can see it's gone green: it is staged and ready to commit.
+		
+		\item
+		If we want to unstage it, we can \texttt{git reset}.
+		This takes everything out of the staging area.
+		We can also \texttt{git add -p} to interactively unstage things.
+		
+		\item
+		Just make sure things are staged before you commit them.
+	}
+\end{frame}
+
+\begin{frame}{Committing}
+	\begin{itemize}
+		\item \texttt{git commit}
+	\end{itemize}
+	
+	\note[item]{
+		Once we've added our changes, we can commit them.
+		Not a lot to see here.
+		
+		\item
+		However, if we used \texttt{git add -p} to stage just some of our changes, we can see (with \texttt{git show}) that only those changes got staged.
+	}
+\end{frame}
+
+\begin{frame}{The Cycle}
+	\begin{itemize}
+		\item Edit files.
+		\item \texttt{git add -p}
+		\item \texttt{git commit}
+	\end{itemize}
+	
+	\note[item]{
+		This is how the cycle goes.
+		We edit some files, we add them, and we commit them.
+		
+		\item
+		For some people this is about all they know how to do with Git.
+	}
+\end{frame}
+
 \end{document}
