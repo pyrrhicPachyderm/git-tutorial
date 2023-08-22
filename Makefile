@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-LATEXMK_FLAGS = --pdf --cd
+LATEXMK_FLAGS = --pdf --cd --lualatex
 RM := rm -f
 
 content_tex_files := presentation.tex
