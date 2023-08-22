@@ -1743,6 +1743,93 @@
 	}
 \end{frame}
 
+\subsection{Inspecting History}
+
+\begin{frame}{Looking at History}
+	\begin{itemize}
+		\item \texttt{git log}
+		\item \texttt{git show 95f98c6}
+	\end{itemize}
+	
+	\note[item]{
+		So, we're beginning to get a bit of history in our repo.
+		Now, suppose we want to go and hae a look at it.
+		
+		\item
+		You've already seen \texttt{git log}.
+		Now it should be a bit longer.
+		If it exceeds one screen in height, it'll enter a pager, and you can page up and down.
+		While it's in the pager, you can type \texttt{/} to search the history.
+		\texttt{n} does to the next match, and \texttt{N} to the previous.
+		
+		\item
+		You've also seen \texttt{git log}.
+		Without an argument, it shows you the most recent commit.
+		But if you have a hash (probably from \texttt{git log}), then you look at a specific commit.
+	}
+\end{frame}
+
+\begin{frame}{Checkout Out}
+	\begin{itemize}
+		\item \texttt{git checkout 95f98c6}
+		\item \texttt{git checkout master}
+	\end{itemize}
+	
+	\note[item]{
+		Viewing patches and diffs is all well and good, but what if you want to go and see the full state of files at a particular commit.
+		We need to check out that commit.
+		
+		\item
+		This will change everything in our working directory to that commit.
+		It will fail, and warn you, if it would overwrite any uncommited changes, so don't worry.
+		
+		\item
+		Checking out a particular leaves you with ``detached HEAD'', which is just a scary way of saying you're not looking at a particular branch any more.
+		We can reattach our HEAD to the \texttt{master} branch by checking out the branch.
+	}
+\end{frame}
+
+\begin{frame}{Refs}
+	\begin{itemize}
+		\item \texttt{git show HEAD}
+		\item \texttt{git show master}
+		\item \texttt{git show HEAD\textasciicircum}
+		\item \texttt{git show HEAD\textasciicircum\textasciicircum}
+		\item \texttt{git show HEAD\textasciitilde 2}
+	\end{itemize}
+	
+	\note[item]{
+		We don't always need to refer to a commit using its hash.
+		We can all sorts of shortcuts.
+		
+		\item
+		\texttt{HEAD} is whichever commit we've currently got checkout out.
+		\texttt{master} is obviously the commit the master branch points to.
+		\texttt{\textasciicircum} refers to the parent of a commit, and can be stacked.
+		\texttt{\textasciitilde} is similar: it goes back a cetain number of parents.
+	}
+\end{frame}
+
+\begin{frame}{Diffs}
+	\begin{itemize}
+		\item \texttt{git diff}
+		\item \texttt{git diff HEAD\textasciicircum 1}
+		\item \texttt{git diff HEAD\textasciicircum 1 HEAD}
+		\item \texttt{git diff HEAD\textasciicircum HEAD -- script.R}
+	\end{itemize}
+	
+	\note[item]{
+		While \texttt{git show} can show us the changes made by any one commit, we can actually diff any two arbitrary commits.
+		Without arguments, it diffs the working directory against the index (the staging area).
+		With one argument, it diffs the working directory against the given commit.
+		With two arguments, it diffs the first against the second.
+		Any arguments after a \texttt{--} are file names, and it looks only in those files.
+		
+		\item
+		Note that \texttt{git diff HEAD\textasciicircum 1 HEAD} should be the same as \texttt{git show HEAD}.
+	}
+\end{frame}
+
 \section{Collaborating}
 
 \subsection{Remotes}
