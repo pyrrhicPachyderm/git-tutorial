@@ -36,6 +36,7 @@
 \makeatother
 
 \newcommand\dircomm[1]{\hspace{0.5em}\textrm{#1}}
+\newcommand\dircommcol[1]{\dircomm{\textcolor{blue}{#1}}}
 
 \title{An Introduction to Git}
 \author{Christopher Brown}
@@ -1177,6 +1178,134 @@
 		Now you can send this snapshot to Zoe, and so you still get your good code.
 		But you never have to send her those other three snapshots, you can bury your embarrassment in the depths of your hard drive.
 		The snapshots still exist, but there's no branch pointing to them, so you're unlikely to ever stumble across them.
+	}
+\end{frame}
+
+\subsection{Staging Area}
+
+\begin{frame}{Too Many Changes At Once}
+	Bad commit messages:
+	\begin{itemize}
+		\item Add everything I wrote on Tuesday morning.
+		\item Change the query, download, and read functions.
+		\item Rewrite the whole math module.
+	\end{itemize}
+	
+	\note[item]{
+		There's another obstacle to keeping a well-groomed history: putting too many changes in one snapshot.
+		It's a very easy mistake to make.
+		
+		\item
+		Maybe you've just got really in the zone, and you've been hammering away at the keyboard all morning.
+		You've written three new features, but you've forgotten to make any snapshots.
+		
+		\item
+		Or suppose you go to change the \texttt{read()} function, but the change you want to make requires you to download things in a different format.
+		So you change the \texttt{download()} function to handle the new format.
+		But doing so also required making the \texttt{query()} function handle the new format.
+		By the time you finished the change you set out to make to the \texttt{read()} function, you've actually made three different changes.
+		
+		\item
+		In both these cases, it would be useful if each snapshot represented a discrete change, so that you can look at them in future.
+		So you cant just copy your whole \texttt{working} directory to make a snapshot.
+	}
+\end{frame}
+
+\begin{frame}[t]{Staging Area}
+	\only<+|handout:0>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.3 script.R\dircommcol{v123}.
+			.2 staging.
+			.2 6d97fcee39f983edc17e304db8381ad3174c15d9.
+			.3 script.R\dircommcol{v1}.
+		}
+	}
+	\only<+|handout:0>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.3 script.R\dircommcol{v123}.
+			.2 staging.
+			.3 script.R\dircommcol{v1}.
+			.2 6d97fcee39f983edc17e304db8381ad3174c15d9.
+			.3 script.R\dircommcol{v1}.
+		}
+	}
+	\only<+|handout:0>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.3 script.R\dircommcol{v123}.
+			.2 staging.
+			.3 script.R\dircommcol{v12}.
+			.2 6d97fcee39f983edc17e304db8381ad3174c15d9.
+			.3 script.R\dircommcol{v1}.
+		}
+	}
+	\only<+|handout:0>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.3 script.R\dircommcol{v123}.
+			.2 staging.
+			.3 script.R\dircommcol{v12}.
+			.2 6d97fcee39f983edc17e304db8381ad3174c15d9.
+			.3 script.R\dircommcol{v1}.
+			.2 864e37b35a26665ab8d6cfc595f6e4bd50e202c3.
+			.3 script.R\dircommcol{v12}.
+		}
+	}
+	\only<+|handout:0>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.3 script.R\dircommcol{v123}.
+			.2 staging.
+			.3 script.R\dircommcol{v123}.
+			.2 6d97fcee39f983edc17e304db8381ad3174c15d9.
+			.3 script.R\dircommcol{v1}.
+			.2 864e37b35a26665ab8d6cfc595f6e4bd50e202c3.
+			.3 script.R\dircommcol{v12}.
+		}
+	}
+	\only<+>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.3 script.R\dircommcol{v123}.
+			.2 staging.
+			.3 script.R\dircommcol{v123}.
+			.2 6d97fcee39f983edc17e304db8381ad3174c15d9.
+			.3 script.R\dircommcol{v1}.
+			.2 864e37b35a26665ab8d6cfc595f6e4bd50e202c3.
+			.3 script.R\dircommcol{v12}.
+			.2 b23984e16bfc5fc7c0df1de6a9a6f4d25d9e1cb8.
+			.3 script.R\dircommcol{v123}.
+		}
+	}
+	
+	\note[item]{
+		The solution is to create a staging area.
+		
+		\item
+		You've made all your changes in the \texttt{working} directory, but you want to make them into two separate snapshots.
+		So you create a \texttt{staging} directory.
+		You copy the most recent snapshot into \texttt{staging}.
+		
+		\item
+		Then you replay the first change you want to make into \texttt{staging}.
+		You create the new snapshot from \texttt{staging}, instead of \texttt{working}.
+		
+		\item
+		Then you replay the second change into \texttt{staging}, and again make a new snapshot from that.
+		
+		\item
+		Now your snapshots are all caught up with your working directory, but you've got nice intermediate ones, showing each change incrementally.
+		
+		\item
+		Replaying your changes one by one into \texttt{staging} would obviously be a huge chore doing it manually like this, but again Git's got you covered; it's got commands to do it nicely for you.
 	}
 \end{frame}
 
