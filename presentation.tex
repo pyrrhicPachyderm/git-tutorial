@@ -859,4 +859,165 @@
 	}
 \end{frame}
 
+\subsection{Distributed}
+
+\begin{frame}{A Sharing Problem}
+	\centering
+	\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},subgraph text top=text centered,subgraph nodes={font=\bfseries}]
+		\graph[fresh nodes,tree layout,grow'=up] {
+			you/You[draw] // {
+				snapshot0/"snapshot-0" <- "\rvdots" <- snapshot111/"snapshot-111" <- {
+					snapshot112/"snapshot-112" <- snapshot114/"snapshot-114" <- snapshot115/"snapshot-115",
+					snapshot113/"snapshot-113"
+				}
+			},
+			zoe/Zoe[draw] // {
+				snapshot0/"snapshot-0" <- "\rvdots" <- snapshot111/"snapshot-111" <- {
+					snapshot112/"snapshot-112",
+					snapshot113/"snapshot-113" <- snapshot114/"snapshot-114" <- snapshot115/"snapshot-115"
+				}
+			}
+		};
+	\end{tikzpicture}
+	
+	\note[item]{
+		So far, you've been working by yourself.
+		But that gets lonely.
+		Thankfully, you've got a friend called Zoe, adn she wants to help you.
+		You're liking your version control system, so you send her the whole thing.
+		You just email her the entire project directory, working, snapshots, branches and tags files, and all.
+		Then Zoe catches a flight to Patagonia and you don't hear from her for a week.
+		
+		\item
+		When she gets back, you notice a problem.
+		You've both been coding, and making new snapshots.
+		But you're both using the same numbering system, so now you both have snapshots called \texttt{snapshot-114}, \texttt{snapshot-115}, etc.\ but with different code in them.
+		You can't copy her snapshots without overwriting yours.
+		And even if you could, you'd have no idea who wrote which code.
+	}
+\end{frame}
+
+\begin{frame}[fragile]{Attributing Blame}
+	\texttt{snapshot-114/message}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		parent snapshot-110
+		Christopher Brown <pyrrhicpachyderm@gmail.com>
+		2023-08-22T13:09:24+10:00
+		Retry downloads on 5xx HTTP errors.
+		
+		HTTP error codes 500 to 511 are failures on
+		valid requests. They may occur erratically,
+		so just retry the download.
+	\end{lstlisting}
+	
+	\note[item]{
+		Not knowing who wrote what is thankfully easy to solve.
+		You add the author's name and email address to every \texttt{message} file.
+	}
+\end{frame}
+
+\begin{frame}[fragile]{The Return of Hashing}
+	\texttt{6d97fcee39f983edc17e304db8381ad3174c15d9/message}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		Christopher Brown <pyrrhicpachyderm@gmail.com>
+		2023-08-13T11:02:29+10:00
+		Add download() to download FASTA files.
+	\end{lstlisting}
+	\medskip
+	\texttt{edd9a01a7b0255754b07e57055cafd3f3cdea3b5/message}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		parent 6d97fcee39f983edc17e304db8381ad3174c15d9
+		Christopher Brown <pyrrhicpachyderm@gmail.com>
+		2023-08-13T11:27:47+10:00
+		Refactor download() to use web_history.
+		
+		This should allow larger values of retmax,
+		speeding up the download.
+	\end{lstlisting}
+	
+	\note[item]{
+		The other problem---two snapshots having the same name---is more troublesome.
+		Thankfully, you recently learned about hashing (remember that?), and you realise it presents the answer to your problems!
+		Instead of calling a snapshot \texttt{snapshot-0}, you hash its \texttt{message} file, and use the hash of that as the snapshot name.
+		
+		\item
+		Here, we've done this to the first two snapshots, previous \texttt{snapshot-0} and \texttt{snapshot-1}.
+		The first \texttt{message} file hashes to give the string that forms the new snapshot name.
+		We then use this snapshot name as the parent for the next snapshot, and hash that, \texttt{message} to get the name for that snapshot.
+		
+		\item
+		Remember how a hash changes totally if any part of the contents changes?
+		So two snapshots will only get the same name if they're created at the same time, by the same person, with the same summary.
+	}
+\end{frame}
+
+\begin{frame}{Recombining}
+	\centering
+	\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},subgraph text top=text centered,subgraph nodes={font=\bfseries}]
+		\graph[fresh nodes,tree layout,grow'=up] {
+			you/You[draw] // {
+				6d97fce <- "\rvdots" <- 2de04ad <- {
+					4b36dc9 <- 2138c74 <- 367d5d5,
+					2a2b6cf
+				}
+			},
+			combined/Combined[draw] // {
+				6d97fce <- "\rvdots" <- 2de04ad <- {
+					4b36dc9 <- 2138c74 <- 367d5d5,
+					2a2b6cf <- 3603f71 <- 2a2b6cf
+				}
+			},
+			zoe/Zoe[draw] // {
+				6d97fce <- "\rvdots" <- 2de04ad <- {
+					4b36dc9,
+					2a2b6cf <- 3603f71 <- 2a2b6cf
+				}
+			}
+		};
+		\path (you) edge[->,red] (combined);
+		\path (zoe) edge[->,red] (combined);
+	\end{tikzpicture}
+	
+	\note[item]{
+		Now that you and Zoe have renamed all your snapshots, you can merrily combine your repositories, because none of her snapshots have the same name as any of yours.
+		You can just copy all of her snapshots into your \texttt{project} directory, and vice versa, and there won't be any collisions or confusion; you'll both have a copy of one another's work.
+		
+		\item
+		This point is important, so it's worth reiterating.
+		The hash of a snapshot uniquely identifies it (and its parent).
+		Thus, entire snapshots can be passed around between different computers without losing their identity, or their place in the history tree.
+	}
+\end{frame}
+
+\begin{frame}{Distributed}
+	Advantages of a distributed system:
+	\begin{itemize}
+		\item Can work offline
+		\item Can keep things private
+		\item No single point of failure
+	\end{itemize}
+	
+	\note[item]{
+		Note that this is a distributed system.
+		Everybody has their own copy of the repository.
+		There are a number of advntages to this, over the centralised systems that some other version control systems use.
+		
+		\item
+		You can do all your work offline.
+		Zoe spends a lot of time flying around to different countries, with spotty internet access, so she appreciates this.
+		it also makes things much faster, 'cause you don't need to talk to a server every time you want to do something.
+		You only need the internet to share your work.
+		
+		\item
+		You can also choose to keep some of your work private.
+		Everything's fine if you decide not to share certain snapshots or branches with Zoe.
+		
+		\item
+		Note that we haven't invoked GitHub here.
+		You and Zoe can keep emailing snapshots to one another, with no need for a central host.
+		But if you do use GitHub, it doesn't matter if GitHub goes bankrupt and vanishes.
+		Everyone's got a copy, so everyone's got a backup.
+	}
+\end{frame}
+
 \end{document}
