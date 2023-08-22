@@ -1995,4 +1995,61 @@
 	}
 \end{frame}
 
+\subsection{Forks}
+
+\begin{frame}{Forking}
+	\begin{itemize}
+		\item On GitHub, fork your neighbour's repo.
+		\item \texttt{git remote add fork https://github.com/me/zoe-project.git}
+		\item \texttt{git push fork master}
+	\end{itemize}
+	
+	\note[item]{
+		As mentioned, you can't push directly to other people's repositories.
+		They can go into GitHub and give you permission, if they really trust you.
+		But a lot of the time, when you're contributing to a big open source project, they won't trust you that much.
+		So how do you contribute?
+		
+		\item
+		You create a fork.
+		This is just another copy of the repository on GitHub, but under your name.
+		You can push and pull your work to the fork, without affecting the main repo.
+		
+		\item
+		Go to GitHub to fork your neighbour's project.
+		Then add your fork as a remote for your local copy of your neighbour's repo.
+		You now have two remotes: \texttt{origin}, their copy, and \texttt{fork}, your copy.
+		
+		\item
+		Previously, we've pushed with \texttt{git push origin master}.
+		Now, we can't push to \texttt{origin}, so we push to \texttt{fork}.
+	}
+\end{frame}
+
+\begin{frame}{Pull Requests}
+	\begin{itemize}
+		\item Ask your neighbour to pull from your fork.
+		\item \texttt{git remote add bob-fork https://github.com/bob/zoe-project.git}
+		\item \texttt{git pull bob-fork master}
+		\item \texttt{git push origin master}
+	\end{itemize}
+	
+	\note[item]{
+		So, you've made some changes to your fork.
+		How do you get Zoe to make them to her original copy?
+		You ask her to pull them from your fork.
+		
+		\item
+		You may have heard of a pull request (or PR).
+		GitHub has a whole system set up for automatic creation and review of pull requests.
+		But a pull request is not inherently a part of Git.
+		GitHub has this construct, but inherently, a pull request is just a request to pull.
+		You can just as well make a ``pull request'' by tapping your neighbour on the shoulder and saying ``hey, I made a cool change, do you want to pull it?''
+		
+		\item
+		If they do want to, they need to add your fork as a remote on their repo, and then they can just pull from it.
+		Then, they can push to their own remote, and your change gets incorporated into the original version.
+	}
+\end{frame}
+
 \end{document}
