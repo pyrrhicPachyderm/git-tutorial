@@ -1453,4 +1453,125 @@
 	}
 \end{frame}
 
+\section{Workflow}
+
+\subsection{Initial Commit}
+
+\begin{frame}{The First File}
+	\begin{itemize}
+		\item \texttt{touch script.R}
+		\item Open in a text editor:
+		\begin{itemize}
+			\item Mac OS X: \texttt{open script.R}
+			\item Linux: \texttt{xdg-open script.R}
+			\item Git Bash (Windows): \texttt{start script.R}
+		\end{itemize}
+		\item Edit (and save) the file:
+		\begin{itemize}
+			\item \texttt{print("Hello, world!")}
+		\end{itemize}
+		\item \texttt{Rscript script.R}
+	\end{itemize}
+	
+	\note[item]{
+		Now, it's time to create a file.
+		If you want to go over to your file manager and do this there, feel free.
+		
+		\item
+		If you want to keep using the terminal, then use \texttt{touch} to create the file.
+		Then open the file, however you need to or your OS.
+		For now, we're just going to put the simplest piece of code in our file.
+		make sure you save it!
+		
+		\item
+		Then we'll come back to our terminal, and we'll run the file, just to confirm it works.
+	}
+\end{frame}
+
+\begin{frame}{\texttt{git add}}
+	\begin{itemize}
+		\item \texttt{git status}
+		\item \texttt{git add script.R}
+		\item Danger:
+		\begin{itemize}
+			\item \texttt{git add .}
+			\item \texttt{git add -A}
+		\end{itemize}
+	\end{itemize}
+	
+	\note[item]{
+		Before we go any further, let's run \texttt{git status} again, and see where we are.
+		We've now got an untracked file.
+		Untracked files are files that just aren't being managed by Git; Git doesn't think they're any of its business.
+		If we want Git to manage it, we'll have to add it.
+		
+		\item
+		We can do that with \texttt{git add}.
+		\texttt{git add} adds files to the \emph{staging area}, which we saw at the end of the parable.
+		Remember: anything that doesn't get added to the staging area doesn't go in the commit.
+		As such, \texttt{git add} is one of the most common commands you'll be using.
+		
+		\item
+		We can add \texttt{script.R} directly; that's the first line here.
+		This is how I recommend you do things; I'll get into why more later.
+		A lot of people introducing you to Git will show you one of the other two lines.
+		These add \texttt{everything} in your working directory.
+		You can quite easily make a mistake adding something you didn't want to, so despite how commonly you see these, I suggest you steer clear.
+	}
+\end{frame}
+
+\begin{frame}{\texttt{git commit}}
+	\begin{itemize}
+		\item \texttt{git status}
+		\item \texttt{git commit}
+		\item \texttt{git commit -m "Add a Hello World script."}
+	\end{itemize}
+	
+	\note[item]{
+		Run \texttt{git status} again!
+		We now have one file sitting in the staging area ready to be committed.
+		So let's commit it.
+		
+		\item
+		First, try typing \texttt{git commit}.
+		Whether this works will depend on whether we got your editor properly configured, back when we set up your name and email address.
+		If it works, it will open \texttt{nano}.
+		Then you can type your commit message, save (with \texttt{Ctrl+S}) and exit (with \texttt{Ctrl+X}).
+		If you exit without saving, it will abort with an empty commit message.
+		
+		\item
+		Alternatively, you can give your commit message on the command line, with \texttt{-m}.
+		The reason I suggest using the editor is because it lets you write multi-line commit messages more easily.
+		
+		\item
+		We've already touched on some conventions for commit messages.
+		Imperative tense, one short line, blank line, then a full description.
+		Manually line wrap the long description if it exceeds 72 characters, and try to keep the one line short as well (under 50 characters).
+	}
+\end{frame}
+
+\begin{frame}{Inspecting Our First Commit}
+	\begin{itemize}
+		\item \texttt{git status}
+		\item \texttt{git log}
+		\item \texttt{git show}
+	\end{itemize}
+	
+	\note[item]{
+		Once more, \texttt{git status}!
+		Nothing to commit, working tree clean.
+		The working directory is exactly the same as the tip of the current branch; nothing to report.
+		
+		\item
+		Next, try \texttt{git log}.
+		This is nearly as important a lifeline as \texttt{git status}.
+		It shows you the whole history of the current branch, right back to the root.
+		It's a great way of looking to see what's been done.
+		
+		\item
+		Now, try \texttt{git show}.
+		This shows us all the details for the most recent commit, including all the changes it made to files.
+	}
+\end{frame}
+
 \end{document}
