@@ -23,6 +23,17 @@
 \def\blfootnote{\gdef\@thefnmark{}\@footnotetext}
 \makeatother
 
+%\vdots with appropraite spacing for use outside a matrix.
+%From https://tex.stackexchange.com/a/112212
+\makeatletter
+\DeclareRobustCommand{\rvdots}{%
+	\vbox{
+		\baselineskip4\p@\lineskiplimit\z@
+		\kern-\p@
+		\hbox{.}\hbox{.}\hbox{.}
+	}}
+\makeatother
+
 \title{An Introduction to Git}
 \author{Christopher Brown}
 \date{}
