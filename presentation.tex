@@ -1022,4 +1022,104 @@
 	}
 \end{frame}
 
+\subsection{Merging}
+
+\begin{frame}{Another Sharing Problem}
+	\centering
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},subgraph text top=text centered,subgraph nodes={font=\bfseries},node distance=1em]
+				\graph[fresh nodes,tree layout,grow'=up] {
+					you/You[draw,minimum width=12em] // {
+						6d97fce <- "\rvdots" <- 168cf4c <- e46f258 <- 0f63002
+					}
+				};
+				\node[branch,right=of 0f63002] (you math) {math} edge[->,branch] (0f63002);
+			\end{tikzpicture}
+		\end{column}
+		\hfill
+		\begin{column}{0.5\textwidth}
+			\centering
+			\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},subgraph text top=text centered,subgraph nodes={font=\bfseries},node distance=1em]
+				\graph[fresh nodes,tree layout,grow'=up] {
+					zoe/Zoe[draw,minimum width=12em] // {
+						6d97fce <- "\rvdots" <- 168cf4c <- 9d378db <- 6146273
+					}
+				};
+				\node[branch,right=of 6146273] (zoe math) {math} edge[->,branch] (6146273);
+			\end{tikzpicture}
+		\end{column}
+	\end{columns}
+	
+	\note[item]{
+		Soon enough, you run into another issue.
+		So far, when you've been recombining your histories, your snapshots have been separate.
+		You can build on her snapshots, and vice versa.
+		But what if you both work simultaneously.
+		
+		\item
+		You've been working on the \texttt{math} branch, and you've added a function that generates magic numbers.
+		But Zoe's also been working on the \texttt{math} branch, and she's added a function that generates primes.
+		You like both of these features, and want to put them both in the next release.
+		So what do you do?
+		
+		\item
+		You've both just added stuff, so it's easy enough to edit the relevant file to have both your changes.
+		But then when you come to create the next snapshot, you've a dilemma.
+		Which snapshot is the parent?
+		Yours, or Zoe's?
+	}
+\end{frame}
+
+\begin{frame}[fragile]{Two Parents}
+	\texttt{674dfe8646d3eeb4d2a9cc20fead1495f794a1a5/message}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		parent 0f63002a0f7b9e3bebe04ea50a3fd83eee3d39e6
+		parent 614627384c20bcf8d038320be8fb4c58a9b83526
+		Christopher Brown <pyrrhicpachyderm@gmail.com>
+		2023-08-13T15:01:49+10:00
+		Merge pyrrhic/math and zoe/math.
+	\end{lstlisting}
+	
+	\note[item]{
+		It's an easy enough answer.
+		It contains code from both snapshots, so both snapshots have to be parents.
+		You just add an extra line to its \texttt{message} file.
+		This snapshot has two parents.
+		
+		\item
+		The actual text of the message isn't very important here.
+		You've not done any actual work in this snapshot; it's just combining two previous pieces of work.
+	}
+\end{frame}
+
+\begin{frame}{A Twined Tree}
+	\centering
+	\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]},subgraph text top=text centered,subgraph nodes={font=\bfseries},node distance=1em]
+		\graph[fresh nodes,tree layout,grow'=up] {
+			combined/Combined[draw,minimum width=16em] // {
+				6d97fce <- "\rvdots" <- 168cf4c <- {
+					e46f258 <- 0f63002,
+					9d378db <- 6146273
+				} -> 674dfe8
+			}
+		};
+		\node[branch,right=of 674dfe8] (combined math) {math} edge[->,branch] (674dfe8);
+	\end{tikzpicture}
+	
+	\note[item]{
+		Now your history looks like this.
+		It's not a tree anymore (but it's still a directed acyclic graph).
+		
+		\item
+		You can pass all your snapshots, and the new merge snapshot, over to Zoe, and now both your histories look the same.
+		
+		\item
+		Now, in this parable, you've had to manually copy your changes and Zoe's changes into the same file to preapre this merge snapshot.
+		In reality, Git has a lot of very clever tools to do most of that work for you, and you'll only have to intervene manually in the most complicated of cases.
+		But we'll cover more of that next time.
+	}
+\end{frame}
+
 \end{document}
