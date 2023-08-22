@@ -649,4 +649,131 @@
 	}
 \end{frame}
 
+\subsection{Branches}
+
+\begin{frame}[t]{Non-Linear Development}
+	\only<+|handout:0>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.2 snapshot-0.
+			.2 ....
+			.2 snapshot-99.
+		}
+	}
+	\only<+|handout:0>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.2 snapshot-0.
+			.2 ....
+			.2 snapshot-99.
+			.2 ....
+			.2 snapshot-109.
+		}
+	}
+	\only<+>{
+		\dirtree{%
+			.1 project.
+			.2 working.
+			.2 snapshot-0.
+			.2 ....
+			.2 snapshot-99.
+			.2 ....
+			.2 snapshot-109.
+			.2 snapshot-110\hspace{0.5em}\textrm{?}.
+		}
+	}
+	\note[item]{
+		So, you now have a version control system, and it's working great.
+		You can jump back to any earlier version whenever you want.
+		
+		\item
+		You keep making changes, and making snapshots, and eventually you get to \texttt{snapshot-99}.
+		Happy with what you've got, you release \texttt{snapshot-99} to the general public, as release version 1.0.
+		
+		\item
+		The public likes your software, so you set out to add new features for the next version.
+		You create another ten snapshots, and soon you're at \texttt{snapshot-109}.
+		
+		\item
+		But then the bug reports start rolling in.
+		It's fine, nobody's perfect, but it turns out that people using \texttt{snapshot-99} have found some problems.
+		You don't want all your new features getting in the way while you debug, so you copy the contents of \texttt{snapshot-99} into your \texttt{working} directory.
+		It's a quick fix, and soon you're ready to create \texttt{snapshot-110}.
+		But now you've got a problem.
+		\texttt{snapshot-110} is based on \texttt{snapshot-99}, not \texttt{snapshot-109}.
+	}
+\end{frame}
+
+\begin{frame}{Branches}
+	\begin{columns}[onlytextwidth]
+		\begin{column}{0.6\textwidth}
+			\centering
+			\includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{tree}
+			\blfootnote{Winter Tree, Haslemere, by Simon Burchell}
+		\end{column}
+		\hfill
+		\begin{column}{0.4\textwidth}
+			\centering
+			\begin{tikzpicture}[>={Stealth[length=4pt,width=4pt]}]
+				\graph[trie,tree layout,grow=up] { %trie allows duplicate node names.
+					"snapshot-0" <- "\rvdots" <- "snapshot-99" <- {
+						"snapshot-100" <- "\rvdots" <- "snapshot-109",
+						"snapshot-110"
+					}
+				};
+			\end{tikzpicture}
+		\end{column}
+	\end{columns}
+	
+	\note[item]{
+		Pondering the problem, you decide to go for a walk in nature.
+		Your eyes fall upon a large tree beside the path.
+		Fixing your gaze upon one twig, it's easy easy to follow it back to the base of the tree.
+		From the twig to the branch it grew from, from branch to bough, bough to trunk, and then down to the roots.
+		
+		\item
+		You realise this is the perfect model for keeping trach of multiple lines of development.
+		For each snapshot, you just need to keep track of which snapshot it grew from, and then following these links, you will be trace any branch right back to the root, following the whole line of development.
+	}
+\end{frame}
+
+\begin{frame}[fragile]{Parents}
+	\texttt{snapshot-99/message}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		parent snapshot-98
+		2023-08-20T09:15:16+10:00
+		Update version number to 1.0.0.
+	\end{lstlisting}
+	
+	\texttt{snapshot-100/message}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		parent snapshot-99
+		2023-08-21T01:00:12+10:00
+		Add query() to get a list of available files.
+	\end{lstlisting}
+	
+	\texttt{snapshot-110/message}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		parent snapshot-99
+		2023-08-22T06:29:05+10:00
+		Fix download() failing on Windows machines.
+	\end{lstlisting}
+	
+	\note[item]{
+		So, how do you implement this?
+		Simple: store the parent of each snapshot in the \texttt{message} file.
+		
+		\item
+		This is what it might look like.
+		Each \texttt{message} file now has an extra line, giving the parent.
+		For now, most snapshots just use the previous number as the parent: 99's parent is 98, 100's parent is 99.
+		But the parent of snapshot 110 is snapshot 99.
+		
+		\item
+		Just this simple mecahnism suffices to store the entire structure of the tree, and the entire history for any snapshot.
+	}
+\end{frame}
+
 \end{document}
