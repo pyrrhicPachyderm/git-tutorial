@@ -1662,6 +1662,87 @@
 	}
 \end{frame}
 
+\subsection{Ignoring}
+
+\begin{frame}[fragile]{Generated Files}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		x <- rnorm(100)
+		pdf("hist.pdf")
+		hist(x)
+		dev.off()
+	\end{lstlisting}
+	
+	\note[item]{
+		Edit your R script to contain the following.
+		This generates a bunch of draws from a normal distribution, and plots a histogram.
+		
+		\item
+		Note that before creating the histogram, we create a PDF file to save it to.
+		\texttt{dev.off()} then closes the PDF file when we're done writing to it.
+		This is how you save your figures if you don't use RStudio, by the way.
+		
+		\item
+		Run it, and you should get \texttt{hist.pdf} appear in your directory.
+	}
+\end{frame}
+
+\begin{frame}{Not Tracking}
+	\begin{itemize}
+		\item \texttt{git status}
+		\item Don't do these:
+		\begin{itemize}
+			\item \texttt{git add .}
+			\item \texttt{git add -A}
+		\end{itemize}
+	\end{itemize}
+	
+	\note[item]{
+		Now, we've got this PDF file in our working directory.
+		Do we want to add it to Git?
+		
+		\item
+		No!
+		This is a generated file.
+		We can recreate it from the source code, so controlling it separately would be redundant.
+		Worse, this one is random, so we'd get a new version every time we ran it.
+		
+		\item
+		You don't want to add generated files to Git.
+		Then the generated files and the code that generates them might get out of sync, and that gets terribly confusing.
+		
+		\item
+		But now this untracked file is forever going to be floating around our \texttt{git status} output.
+		And if we use \texttt{git add .} or \texttt{git add -A}, we'd accidentally add it to Git.
+		It'd be nice if we could tell Git to just ignore it.
+	}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{.gitignore}}
+	\begin{itemize}
+		\item \texttt{touch .gitignore}
+	\end{itemize}
+	\bigskip
+	\texttt{.gitignore}
+	\begin{lstlisting}[frame=single,tabsize=4,gobble=8]
+		*.pdf
+	\end{lstlisting}
+	
+	\note[item]{
+		We can tell Git to ignore it!
+		We use a \texttt{.gitignore} file.
+		
+		\item
+		Create a \texttt{.gitignore} file and open it.
+		Note that this starts with a dot, so it's a hidden file.
+		
+		\item
+		In the \texttt{.gitignore}, we tell Git to ignore all PDF files.
+		We could tell it to just ignore \texttt{hist.pdf}.
+		Or we could tell it to ignore everything in a \texttt{figures/} directory.
+		There are many options.
+	}
+\end{frame}
+
 \subsection{Remotes}
 
 \begin{frame}{Setting Up a Remote}
