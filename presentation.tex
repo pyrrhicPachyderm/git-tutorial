@@ -1325,4 +1325,56 @@
 	}
 \end{frame}
 
+\section{Setting Up}
+
+\subsection{Configuration}
+
+\begin{frame}{Configuring Git}
+	\begin{itemize}
+		\item \texttt{git config --global user.name "Christopher Brown"}
+		\item \texttt{git config --global user.email "pyrrhicpachyderm@gmail.com"}
+		\item \texttt{git config --global core.editor "nano"}
+	\end{itemize}
+	
+	\note[item]{
+		So, you recall how Git puts your name and email address in the message files?
+		It's going to need to know them.
+		The first couple of lines should set them; just use yours instead of mine.
+		
+		\item
+		It's up to you whether you use your personal email or your institutional email.
+		It'll probably never get used for anything.
+		Its inclusion is largely a holdover from the days when developer were emailing one another source code, but you'll probably be using GitHub, which keeps track of your email separately from Git.
+		I use my personal email because I won't have to change it every few years, and because half of what I do with Git is personal projects anyway.
+		
+		\item
+		The third line sets up which editor you want to use to write commit messages, and for a few other purposes.
+		I really like \texttt{nano} for this purpose, for a few reasons.
+		I'm not sure if \texttt{nano} comes installed with Git Bash on Windows, so we may need to change this later, but there are other options.
+	}
+\end{frame}
+
+\begin{frame}{Configuring R}
+	\footnotesize
+	\begin{itemize}
+		\item \texttt{echo 'export PATH="/c/Program~Files/R/R-4.3.1/bin:\$PATH"' >> \textasciitilde/.bash\_profile}
+		\item Close and reopen the terminal.
+		\item \texttt{R --version}
+		\item \texttt{R.exe --version}
+	\end{itemize}
+	
+	\note[item]{
+		It's not strictly necessary to make Git work, but I'm going to use some examples in R here, and it would be great if you could run them.
+		Git Bash doesn't know where to find the copy of R you've got installed if you're running Windows, so we need to tell it.
+		If you're not running Windows, just run \texttt{R --version}, and it should work.
+		
+		\item
+		If you are running Windows, first you need to find where your R executable is located.
+		It should look like on the slides, but you might have a different version.
+		Then, run the first line, changing the version number if you need.
+		Be careful to type all the special characters correctly, including the single and double quotes.
+		Close your terminal and open it again, then one of the last two lines should work.
+	}
+\end{frame}
+
 \end{document}
